@@ -1,15 +1,31 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Image, SafeAreaView, Text, FlatList } from "react-native";
+import { ListItem } from "./components/ListItem";
+import articles from "./dummies/articles";
 
 export default function App() {
+  const items = articles.map((article, index) => {
+    return (
+      <ListItem
+        ImageUrl={article.urlToImage}
+        title={article.title}
+        author={article.author}
+        key={index.toString()}
+      />
+    );
+  });
+
   return (
-    <View style={styles.container}>
-      <View style={styles.itemContainer}>
-        <View style={styles.leftContainer}></View>
-        <View style={styles.rightContainer}></View>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={articles}
+        renderItem={(item) => {
+          return <ListItem ImageUrl={item.urlToImage} title={item.title} author={item.author} />;
+        }}
+        keyExtractor={(item, index) => index.toString()}
+      />
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -17,21 +33,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  itemContainer: {
-    height: 100,
-    width: "100%",
-    backgroundColor: "red",
-    flexDirection: "row",
-  },
-  leftContainer: {
-    width: 100,
-    backgroundColor: "green",
-  },
-  rightContainer: {
-    flex: 1,
-    backgroundColor: "blue",
   },
 });
