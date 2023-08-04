@@ -1,19 +1,29 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Image, SafeAreaView, Text, FlatList } from "react-native";
+import { StyleSheet, SafeAreaView, FlatList } from "react-native";
 import { ListItem } from "./components/ListItem";
-import articles from "./dummies/articles";
+import dummyArticles from "./dummies/articles";
+import { useState, useEffect } from "react";
 
 export default function App() {
-  const items = articles.map((article, index) => {
-    return (
-      <ListItem
-        ImageUrl={article.urlToImage}
-        title={article.title}
-        author={article.author}
-        key={index.toString()}
-      />
-    );
+  const { articles, setArticles } = useState({});
+
+  const fetchArticles = () => {
+    setArticles(dummyArticles);
+  };
+
+  useEffect(() => {
+    fetchArticles();
   });
+  // const items = articles.map((article, index) => {
+  //   return (
+  //     <ListItem
+  //       ImageUrl={article.urlToImage}
+  //       title={article.title}
+  //       author={article.author}
+  //       key={index.toString()}
+  //     />
+  //   );
+  // });
 
   return (
     <SafeAreaView style={styles.container}>
